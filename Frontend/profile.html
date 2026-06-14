@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile - ProNet</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="navbar">
+    <b>🌐 ProNet</b>
+    <div>
+      <a href="dashboard.html">🏠 Home</a>
+      <a href="people.html">👥 Find People</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="feed.html">📰 Feed</a>
+      <a href="jobs.html">💼 Jobs</a>
+      <a href="messages.html">💬 Messages</a>
+      <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- TOP CARD -->
+    <div class="card" style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+      <!-- PHOTO AREA -->
+      <div style="position:relative; flex-shrink:0;">
+        <div class="avatar-big" id="avatarLetter" style="display:flex;"></div>
+        <img id="avatarPhoto" src="" alt="Profile Photo"
+          style="display:none; width:80px; height:80px; border-radius:50%; object-fit:cover; border:3px solid #2563eb;" />
+        <!-- Camera icon button -->
+        <label for="photoInput" title="Change photo"
+          style="position:absolute; bottom:0; right:0; background:#2563eb; color:white; border-radius:50%;
+                 width:26px; height:26px; display:flex; align-items:center; justify-content:center;
+                 cursor:pointer; font-size:13px; box-shadow:0 2px 6px rgba(0,0,0,0.3);">📷</label>
+        <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)" />
+      </div>
+
+      <div style="flex:1;">
+        <h2 id="pName"></h2>
+        <p id="pJob"  style="color:#2563eb; font-weight:600;"></p>
+        <p id="pInd"  style="color:#666;"></p>
+        <p id="pBio"  style="margin-top:8px;"></p>
+      </div>
+      <button onclick="toggleEdit()">✏️ Edit Profile</button>
+    </div>
+
+    <!-- EDIT FORM -->
+    <div class="card" id="editCard" style="display:none;">
+      <h3>Edit Profile</h3>
+
+      <!-- PHOTO UPLOAD INSIDE EDIT FORM TOO -->
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:14px; padding:12px; background:#f0f4f8; border-radius:8px;">
+        <div class="avatar-big" id="editAvatarLetter" style="width:60px; height:60px; font-size:1.4rem; display:flex;"></div>
+        <img id="editAvatarPhoto" src="" alt=""
+          style="display:none; width:60px; height:60px; border-radius:50%; object-fit:cover; border:2px solid #2563eb;" />
+        <div>
+          <p style="font-size:13px; color:#555; margin-bottom:6px;"><b>Profile Photo</b></p>
+          <label for="photoInput2" class="photo-btn">📁 Choose from Files</label>
+          <input type="file" id="photoInput2" accept="image/*" style="display:none;" onchange="handlePhotoUpload(event)" />
+          &nbsp;
+          <button onclick="openCamera()" type="button" style="padding:6px 12px; font-size:13px;">📷 Take Photo</button>
+          <button onclick="removePhoto()" type="button" class="red" style="padding:6px 12px; font-size:13px; margin-left:4px;">🗑 Remove</button>
+        </div>
+      </div>
+
+      <!-- CAMERA CAPTURE (hidden by default) -->
+      <div id="cameraSection" style="display:none; margin-bottom:14px; background:#000; border-radius:8px; overflow:hidden; position:relative;">
+        <video id="cameraVideo" style="width:100%; max-height:240px; display:block;" autoplay playsinline></video>
+        <div style="padding:10px; background:#111; display:flex; gap:10px; justify-content:center;">
+          <button onclick="snapPhoto()" style="background:#16a34a;">📸 Snap Photo</button>
+          <button onclick="closeCamera()" class="red">✕ Cancel</button>
+        </div>
+      </div>
+      <canvas id="snapCanvas" style="display:none;"></canvas>
+
+      <input id="eName"      type="text" placeholder="Full Name" />
+      <input id="eJob"       type="text" placeholder="Job Title" />
+      <input id="eIndustry"  type="text" placeholder="Industry" />
+      <input id="eSkills"    type="text" placeholder="Skills (comma separated)" />
+      <input id="eExp"       type="text" placeholder="Years of Experience" />
+      <input id="eEdu"       type="text" placeholder="Education" />
+      <input id="eInterests" type="text" placeholder="Interests" />
+      <textarea id="eBio" placeholder="Short bio about yourself..."></textarea>
+      <button onclick="saveProfile()">💾 Save Profile</button>
+    </div>
+
+    <!-- AI SUMMARY -->
+    <div class="card">
+      <div class="flex-between">
+        <h3>✨ AI Profile Summary</h3>
+        <button onclick="genSummary()">Generate with AI</button>
+      </div>
+      <p id="aiLoader" style="display:none; color:#2563eb;">🤖 Generating your summary, please wait...</p>
+      <div id="aiSummary" class="ai-box">Click "Generate with AI" to get your professional summary.</div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="card">
+      <h3>🛠 My Skills</h3>
+      <div id="skillTags" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
+    </div>
+
+    <!-- DETAILS -->
+    <div class="card">
+      <h3>📋 Details</h3>
+      <p><b>Experience:</b> <span id="pExp">-</span> years</p>
+      <p><b>Education:</b>  <span id="pEdu">-</span></p>
+      <p><b>Interests:</b>  <span id="pInt">-</span></p>
+    </div>
+
+    <!-- AI INSIGHTS -->
+    <div class="card">
+      <div class="flex-between">
+        <h3>💡 AI Networking Tips</h3>
+        <button onclick="genInsights()">Get Tips</button>
+      </div>
+      <p id="insLoader" style="display:none; color:#2563eb;">🤖 Analyzing your profile...</p>
+      <div id="aiInsights" class="ai-box">Click "Get Tips" for personalized networking advice.</div>
+    </div>
+
+  </div>
+
+  <script src="js/profile.js"></script>
+</body>
+</html>

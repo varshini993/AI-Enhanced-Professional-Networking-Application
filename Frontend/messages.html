@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Messages - ProNet</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    @keyframes typeBounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30%            { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <b>🌐 ProNet</b>
+    <div>
+      <a href="dashboard.html">🏠 Home</a>
+      <a href="people.html">👥 Find People</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="feed.html">📰 Feed</a>
+      <a href="jobs.html">💼 Jobs</a>
+      <a href="messages.html">💬 Messages</a>
+      <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- AI KEY BANNER (hidden once key is saved) -->
+    <div id="keyBanner" class="card" style="background:#fef3c7;border:1px solid #fbbf24;display:none;">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="font-size:14px;">⚡ <b>Enable real AI replies:</b> Enter your free Anthropic API key</span>
+        <input id="keyInput" type="password" placeholder="sk-ant-..." style="flex:1;min-width:200px;margin:0;padding:8px 12px;" />
+        <button onclick="saveKey()" style="padding:8px 16px;font-size:13px;">Save Key</button>
+        <button onclick="document.getElementById('keyBanner').style.display=\'none\'" class="gray" style="padding:8px 14px;font-size:13px;">Use Smart Fallback</button>
+      </div>
+      <p style="font-size:12px;color:#92400e;margin-top:8px;">
+        Get free key → <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → Sign up → API Keys → Create Key
+        &nbsp;|&nbsp; Key is stored only in your browser, never sent anywhere else.
+      </p>
+    </div>
+
+    <div class="messages-layout">
+
+      <!-- LEFT: CONTACTS -->
+      <div class="card contacts-list">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <h3 style="margin:0;">💬 Messages</h3>
+          <button onclick="openNewChat()" style="padding:6px 12px;font-size:13px;">✏️ New Chat</button>
+        </div>
+        <div id="contactsList"></div>
+      </div>
+
+      <!-- RIGHT: CHAT -->
+      <div class="card chat-area">
+        <div id="chatWith" style="font-weight:bold;padding:16px;border-bottom:1px solid #eee;display:flex;align-items:center;">
+          Select someone to chat with
+        </div>
+        <div id="chatMessages" class="chat-messages">
+          <p style="color:#999;text-align:center;margin-top:40px;">Select a contact to start chatting</p>
+        </div>
+        <div id="chatInput" style="display:none;padding:12px 16px;border-top:1px solid #eee;display:none;gap:10px;">
+          <input id="msgInput" type="text" placeholder="Type a message..." onkeypress="if(event.key==='Enter') sendMsg()" style="margin:0;flex:1;" />
+          <button onclick="sendMsg()" style="padding:10px 18px;">Send</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NEW CHAT POPUP -->
+  <div id="newChatPopup" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+       background:rgba(0,0,0,0.45);z-index:999;align-items:center;justify-content:center;">
+    <div style="background:white;border-radius:12px;padding:24px;width:95%;max-width:420px;
+                max-height:80vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <h3 style="margin:0;">Start a New Chat</h3>
+        <button onclick="closeNewChat()" class="red" style="padding:4px 10px;font-size:13px;">✕</button>
+      </div>
+      <input id="newChatSearch" type="text" placeholder="🔍 Search by name or job..." oninput="filterNewChat()" style="margin-bottom:10px;" />
+      <div id="newChatList"></div>
+    </div>
+  </div>
+
+  <script src="js/messages.js"></script>
+  <script>
+    // Show key banner if no key saved yet
+    window.addEventListener('load', function() {
+      if (!localStorage.getItem('anthropic_key')) {
+        document.getElementById('keyBanner').style.display = 'block';
+      }
+    });
+    function saveKey() {
+      var k = document.getElementById('keyInput').value.trim();
+      if (!k.startsWith('sk-ant-')) { alert('That does not look like a valid Anthropic key. It should start with sk-ant-'); return; }
+      localStorage.setItem('anthropic_key', k);
+      document.getElementById('keyBanner').style.display = 'none';
+      alert('✅ API key saved! AI replies are now enabled.');
+    }
+  </script>
+</body>
+</html>

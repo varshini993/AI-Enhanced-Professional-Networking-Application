@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ProNet - Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-box">
+    <h1>🌐 ProNet</h1>
+    <p>Professional Networking Platform</p>
+
+    <!-- LOGIN -->
+    <div id="loginSection">
+      <h2>Login</h2>
+      <input id="loginEmail"    type="email"    placeholder="Email" />
+      <input id="loginPassword" type="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <p>New user? <a href="#" onclick="show('registerSection'); hide('loginSection')">Register</a></p>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="registerSection" style="display:none">
+      <h2>Create Account</h2>
+      <input id="rName"     type="text"     placeholder="Full Name" />
+      <input id="rEmail"    type="email"    placeholder="Email" />
+      <input id="rPass"     type="password" placeholder="Password" />
+      <input id="rJob"      type="text"     placeholder="Job Title  (e.g. Software Engineer)" />
+      <input id="rIndustry" type="text"     placeholder="Industry  (e.g. Technology)" />
+      <input id="rSkills"   type="text"     placeholder="Skills  (e.g. Python, React, SQL)" />
+      <input id="rExp"      type="text"     placeholder="Years of Experience  (e.g. 2)" />
+      <button onclick="register()">Register</button>
+      <p>Already have account? <a href="#" onclick="show('loginSection'); hide('registerSection')">Login</a></p>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard - ProNet</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="navbar">
+    <b>🌐 ProNet</b>
+    <div>
+      <a href="dashboard.html">🏠 Home</a>
+      <a href="people.html">👥 Find People</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="feed.html">📰 Feed</a>
+      <a href="jobs.html">💼 Jobs</a>
+      <a href="messages.html">💬 Messages</a>
+      <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="card">
+      <h2>Welcome back, <span id="uName"></span>! 👋</h2>
+      <p id="uJob"></p>
+    </div>
+
+    <!-- STATS -->
+    <div class="three-col">
+      <div class="card center">
+        <div class="big-num" id="sConn">0</div>
+        <div>Connections</div>
+      </div>
+      <div class="card center">
+        <div class="big-num" id="sPosts">0</div>
+        <div>Posts</div>
+      </div>
+      <div class="card center">
+        <div class="big-num" id="sJobs">0</div>
+        <div>Jobs</div>
+      </div>
+    </div>
+
+    <!-- AI RECOMMENDATIONS -->
+    <div class="card">
+      <div class="flex-between">
+        <h3>🤖 AI - People You May Know</h3>
+        <button onclick="loadRec()">Refresh</button>
+      </div>
+      <p style="color:#666; font-size:13px;">Based on your skills and industry (KNN Algorithm)</p>
+      <div id="recGrid" class="people-grid"></div>
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="card">
+      <h3>📰 Recent Posts in Your Network</h3>
+      <div id="recentPosts"></div>
+    </div>
+
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feed - ProNet</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="navbar">
+    <b>🌐 ProNet</b>
+    <div>
+      <a href="dashboard.html">🏠 Home</a>
+      <a href="people.html">👥 Find People</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="feed.html">📰 Feed</a>
+      <a href="jobs.html">💼 Jobs</a>
+      <a href="messages.html">💬 Messages</a>
+      <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+  </div>
+
+  <div class="page" style="max-width:680px;">
+
+    <!-- CREATE POST -->
+    <div class="card">
+      <h3>📝 Share Something</h3>
+      <textarea id="postText" placeholder="What's on your mind? Share a career update, achievement or question..."></textarea>
+      <div style="display:flex; gap:10px; margin-top:10px; align-items:center;">
+        <select id="postType">
+          <option value="Update">Career Update</option>
+          <option value="Achievement">Achievement 🏆</option>
+          <option value="Question">Question ❓</option>
+          <option value="Tip">Tip 💡</option>
+        </select>
+        <button onclick="createPost()">Post</button>
+      </div>
+    </div>
+
+    <!-- FEED -->
+    <div id="feedList"></div>
+
+  </div>
+
+  <script src="js/feed.js"></script>
+</body>
+</html>

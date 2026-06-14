@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Find People - ProNet</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="navbar">
+    <b>🌐 ProNet</b>
+    <div>
+      <a href="dashboard.html">🏠 Home</a>
+      <a href="people.html">👥 Find People</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="feed.html">📰 Feed</a>
+      <a href="jobs.html">💼 Jobs</a>
+      <a href="messages.html">💬 Messages</a>
+      <a href="#" onclick="logout()">🚪 Logout</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="card">
+      <h2>👥 Find People to Connect With</h2>
+      <input id="searchBox" type="text" placeholder="🔍 Search by name, job, skill or industry..." oninput="filterPeople()" />
+    </div>
+
+    <!-- FILTER BUTTONS -->
+    <div class="card">
+      <b>Filter by Industry:</b>&nbsp;
+      <button class="tag-btn active" onclick="filterByIndustry('All')">All</button>
+      <button class="tag-btn" onclick="filterByIndustry('Technology')">Technology</button>
+      <button class="tag-btn" onclick="filterByIndustry('Finance')">Finance</button>
+      <button class="tag-btn" onclick="filterByIndustry('Healthcare')">Healthcare</button>
+      <button class="tag-btn" onclick="filterByIndustry('Marketing')">Marketing</button>
+      <button class="tag-btn" onclick="filterByIndustry('Design')">Design</button>
+      <button class="tag-btn" onclick="filterByIndustry('Data Science')">Data Science</button>
+    </div>
+
+    <!-- TABS -->
+    <div style="display:flex; gap:10px; margin-bottom:10px;">
+      <button class="tab-btn active" id="tab1" onclick="switchTab('all')">🌍 All People</button>
+      <button class="tab-btn" id="tab2" onclick="switchTab('connections')">🤝 My Connections (<span id="connCount">0</span>)</button>
+      <button class="tab-btn" id="tab3" onclick="switchTab('sent')">📤 Requests Sent</button>
+    </div>
+
+    <div id="allTab">
+      <div id="allPeople" class="people-grid"></div>
+    </div>
+
+    <div id="connTab" style="display:none">
+      <div id="myConnections" class="people-grid"></div>
+    </div>
+
+    <div id="sentTab" style="display:none">
+      <div id="sentRequests" class="people-grid"></div>
+    </div>
+
+  </div>
+
+  <script src="js/people.js"></script>
+</body>
+</html>
